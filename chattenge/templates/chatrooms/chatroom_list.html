@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}
+  {% trans "chatrooms" %}
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>{{ object.username }}</h2>
+      {% if object.name %}
+      <p>{{ object.name }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if request.user %}
+  <!-- Action buttons -->
+  <div class="row">
+    <div class="col-sm-12">
+      {% if request.chatrooms %}
+      <div class="list-group chatroom-list">
+        {% for chatroom in request.chatrooms %}
+        <div class="list-group-item chatroom-card">
+          <img class="chatroom-avatar" src="" />
+          <div class="chatroom-info">
+            <div class="info">
+              <h4>
+                chatroom name
+              </h4>
+              <p>
+                chatroom description
+              </p>
+            </div>
+            <div class="badge badge-primary badge-pill">
+              10
+            </div>
+            <button type="btn" class="btn btn-primary">
+              join
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <!-- End Action buttons -->
+  {% endif %}
+</div>
+{% endblock content %}
