@@ -16,6 +16,7 @@ services:
       - mailhog
     volumes:
       - .:/app:z
+      - ./node_modules
     env_file:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
