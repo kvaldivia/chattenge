@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}
+  {% trans "chatrooms" %}
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      {% if object.name %}
+      <h2>{{ object.name }}</h2>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if request.user %}
+  <!-- Action buttons -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="message-list" id="message-list">
+        <div class="message">
+          <div class="info">
+            <div class="username">
+              Frank Sinatra
+            </div>
+            <div class="time">
+              12:00 pm
+            </div>
+          </div>
+          <div class="meta">
+            message content
+          </div>
+        </div>
+      </div>
+      <div class="message-input">
+        <form action="{% url 'chatrooms:messages' object.id %}" method="post">
+          {% csrf_token %}
+          {{ form }}
+          <label for="my-message">{% trans "Type something to share" %}</label>
+          <input id="my-message" type="text" name="message"/>
+          <input id="submit" type="submit" value="OK" />
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- End Action buttons -->
+  {% endif %}
+</div>
+{% endblock content %}

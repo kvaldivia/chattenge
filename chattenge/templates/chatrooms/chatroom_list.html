@@ -26,17 +26,17 @@
           <div class="chatroom-info">
             <div class="info">
               <h4>
-                chatroom name
+                {{ chatroom.name }}
               </h4>
               <p>
-                chatroom description
+                {{ chatroom.description }}
               </p>
             </div>
             <div class="badge badge-primary badge-pill">
               10
             </div>
-            <button type="btn" class="btn btn-primary">
-              join
+            <button type="btn" class="btn btn-primary" onclick="window.open('{% url 'chatrooms:details' chatroom.id %}')">
+              {% trans "join" %}
             </button>
           </div>
         </div>

@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import ListView, RedirectView, UpdateView
+from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.core import HttpResponse
 
 from chattenge.chatrooms.models import Chatroom
 
@@ -11,7 +12,7 @@ from chattenge.chatrooms.models import Chatroom
 User = get_user_model()
 
 
-class ChatroomView(LoginRequiredMixin, ListView):
+class ChatroomListView(LoginRequiredMixin, ListView):
 
     model = Chatroom
 
@@ -19,7 +20,16 @@ class ChatroomView(LoginRequiredMixin, ListView):
         #from pudb import remote as pudb
         #pudb.set_trace(term_size=(213, 55), host='0.0.0.0', port=6900)
         # request.chatrooms = Chatroom.objects.all()
-        request.chatrooms = [1,2,3]
-        return super(ChatroomView, self).get(request, *args, **kwargs)
+        request.chatrooms = Chatroom.objects.all() 
+        return super(ChatroomListView, self).get(request, *args, **kwargs)
+
+
+chatroom_list_view = ChatroomListView.as_view()
+
+
+class ChatroomView(LoginRequiredMixin, DetailView,):
+
+    model = Chatroom
+
 
 chatroom_view = ChatroomView.as_view()
