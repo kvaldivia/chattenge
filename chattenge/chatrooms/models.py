@@ -15,4 +15,5 @@ class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     chatroom = models.ForeignKey(Chatroom, on_delete=models.DO_NOTHING)
     content = models.TextField(null=False)
-    sent = models.DateTimeField()
+    sent = models.DateTimeField(auto_now=True)
+

@@ -8,6 +8,7 @@ from chattenge.chatrooms.views import (
 from chattenge.chatrooms.rest import (
     join_chatroom_view,
     leave_chatroom_view,
+    send_message_view
 )
 
 app_name = "chatrooms"
@@ -16,5 +17,5 @@ urlpatterns = [
     path("<pk>", view=chatroom_view, name="details"),
     path("<pk>/join", view=join_chatroom_view, name="join"),
     path("<pk>/leave", view=leave_chatroom_view, name="leave"),
-    path("<pk>/messages", view=chatroom_view, name="messages"),
+    path("<pk>/message", view=send_message_view, name="message"),
 ]

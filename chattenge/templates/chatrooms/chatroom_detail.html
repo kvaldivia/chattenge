@@ -17,7 +17,13 @@
   <!-- Action buttons -->
   <script type="text/javascript">
     $(document).ready((event) => {
-      chattenge.chatrooms.joinChatroom('{% url 'chatrooms:join' object.id %}');
+      chattenge.chatrooms.joinChatroom("{% url 'chatrooms:join' object.id %}");
+      $('#send-message').submit((event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const message = $('my-message').val();
+        chattenge.chatrooms.postMessageToChatroom("{% url 'chatrooms:message' object.id %}", message);
+      });
     });
   </script>
   <div class="row">
@@ -38,12 +44,11 @@
         </div>
       </div>
       <div class="message-input">
-        <form action="{% url 'chatrooms:messages' object.id %}" method="post">
+        <form id="send-message" action="{% url 'chatrooms:message' object.id %}" method="post">
           {% csrf_token %}
-          {{ form }}
           <label for="my-message">{% trans "Type something to share" %}</label>
           <input id="my-message" type="text" name="message"/>
-          <input id="submit" type="submit" value="OK" />
+          <input id="submit" type="submit" value="Send" />
         </form>
       </div>
     </div>
