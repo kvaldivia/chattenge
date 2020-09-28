@@ -26,7 +26,7 @@ class ChatroomListView(LoginRequiredMixin, ListView):
 chatroom_list_view = ChatroomListView.as_view()
 
 
-class ChatroomView(LoginRequiredMixin, DetailView,):
+class ChatroomView(LoginRequiredMixin, DetailView):
 
     model = Chatroom
 

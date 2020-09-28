@@ -4,22 +4,22 @@ $(document).ready(() => {
     /*
      * Perform a post request to send a message in the chatroom.
     **/
-    const postMessageToChatroom = (chatroomId, content) => {
-      return utils.post(`/chatroom/${chatroomId}/message`, { content });
+    const postMessageToChatroom = (chatroomUrl, content) => {
+      return utils.post(chatroomUrl, { content });
     }
 
     /*
      * Perform a post request to include the user as a member in the chatroom.
     **/
-    const joinChatroom = (chatroomId) => {
-      return utils.post(`/chatroom/${chatroomId}/join`, {});
+    const joinChatroom = (chatroomUrl) => {
+      return utils.post(chatroomUrl, {});
     }
 
     /*
      * Perform a post request to include the user as a member in the chatroom.
     **/
-    const leaveChatroom = (chatroomId) => {
-      return utils.post(`/chatroom/${chatroomId}/leave`, {});
+    const leaveChatroom = (chatroomUrl) => {
+      return utils.post(chatroomUrl, {});
     }
 
     return {
