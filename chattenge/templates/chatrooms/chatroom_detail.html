@@ -18,6 +18,24 @@
   <script type="text/javascript">
     $(document).ready((event) => {
       chattenge.chatrooms.joinChatroom("{% url 'chatrooms:join' object.id %}");
+      let ws = null;
+      try {
+        ws = new WebSocket("{{ request.stomp_url }}");
+        const client = Stomp.over(ws);
+        const onSuccess = (success) => {
+          console.log(success);
+        };
+        const onError = (error) => {
+          console.log(error);
+        };
+        client.connect('{{ request.stomp_username }}', '{{ request.stomp_password }}', onSuccess, onError, 'chattenge');
+        const read = (data) => {
+          console.log("message: ", data);
+        }
+        const subscription = client.subscribe("", onSuccess);
+      } catch(err) {
+        console.error(err);
+      }
       $('#send-message').submit((event) => {
         event.preventDefault();
         event.stopPropagation();

@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User, Group
 from django.shortcuts import get_object_or_404
 from rest_framework import authentication, permissions
 from rest_framework.response import Response
@@ -47,7 +46,7 @@ class LeaveChatroomView(APIView):
         chatroom.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 leave_chatroom_view = LeaveChatroomView.as_view()
 
@@ -67,7 +66,7 @@ class SendMessageView(APIView):
             "author": request.user,
             "chatroom": chatroom,
         }
-        message = Message.objects.create(**message_data)
+        Message.objects.create(**message_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 

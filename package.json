@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "dependencies": {
     "amqplib": "^0.6.0",
-    "axios": "^0.20.0"
+    "axios": "^0.20.0",
+    "rabbit.js": "^0.4.4",
+    "stompjs": "^2.3.3"
   },
   "devDependencies": {
     "autoprefixer": "^9.4.7",

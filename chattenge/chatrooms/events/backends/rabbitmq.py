@@ -1,4 +1,3 @@
-import json
 import logging
 from urllib.parse import urlparse
 
@@ -41,11 +40,12 @@ class EventsPushBackend(base.BaseEventsPushBackend):
     def __init__(self, url):
         self.url = url
 
-    def emit_event(self, message:str, *, routing_key:str, channel:str="events"):
+    def emit_event(self, message: str, *, routing_key: str, channel: str = "events"):
         try:
             connection = _make_rabbitmq_connection(self.url)
             channel = connection.channel()
             channel.queue_declare(queue='messages')
+            channel.exchange_declare(exchange='messages', exchange_type='fanout')
         except pika.exceptions.AMQPConnectionError:
             err_msg = """\
                 EventsPushBackend: Unable to connect with RabbitMQ\
@@ -59,7 +59,7 @@ class EventsPushBackend(base.BaseEventsPushBackend):
         else:
             try:
                 channel.basic_publish(
-                    exchange='', body=message, routing_key=routing_key)
+                    exchange='messages', body=message, routing_key='messages')
             except Exception:
                 log.error(
                     "EventsPushBackend: Unhandled exception", exc_info=True)

@@ -22,3 +22,4 @@ django-redis==4.12.1  # https://github.com/jazzband/django-redis
 # ------------------------------------------------------------------------------
 djangorestframework==3.11.1
 pika==1.1.0
+django-node-assets==0.9.7

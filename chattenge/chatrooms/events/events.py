@@ -1,18 +1,15 @@
-import collections
 import json
 
 from django.db import connection
-from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 
 from chattenge.utils.db import get_typename_for_model_instance
 from . import middleware as mw
 from .backends import base as backends
 
 
-def emit_event(data:dict, routing_key:str, *,
-               sessionid:str=None, channel:str="events",
-               on_commit:bool=True):
+def emit_event(data: dict, routing_key: str, *,
+               sessionid: str = None, channel: str = "events",
+               on_commit: bool = True):
     if not sessionid:
         sessionid = mw.get_current_session_id()
 
@@ -22,7 +19,10 @@ def emit_event(data:dict, routing_key:str, *,
 
     def backend_emit_event():
         backend.emit_event(
-            message=json.dumps(data), routing_key=routing_key, channel=channel)
+            message=json.dumps(data),
+            routing_key=routing_key,
+            channel=channel
+        )
 
     if on_commit:
         connection.on_commit(backend_emit_event)
@@ -30,8 +30,8 @@ def emit_event(data:dict, routing_key:str, *,
         backend_emit_event()
 
 
-def emit_event_for_model(obj, *, type:str="change", channel:str="events",
-                         content_type:str=None, sessionid:str=None):
+def emit_event_for_model(obj, *, type: str = "change", channel: str = "events",
+                         content_type: str = None, sessionid: str = None):
     """
     Sends a model change event.
     """

@@ -7,11 +7,11 @@ from django.conf import settings
 
 class BaseEventsPushBackend(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def emit_event(self, message:str, *, routing_key:str, channel:str="events"):
+    def emit_event(self, message: str, *, routing_key: str, channel: str = "events"):
         pass
 
 
-def get_events_backend(path:str=None, options:dict=None):
+def get_events_backend(path: str = None, options: dict = None):
     if path is None:
         path = getattr(settings, "EVENTS_PUSH_BACKEND", None)
 

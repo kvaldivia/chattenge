@@ -1,9 +1,6 @@
-from django.apps import AppConfig
-from django.utils.translation import gettext_lazy as _
-
-
 from django.apps import apps, AppConfig
 from django.db.models import signals
+from django.utils.translation import gettext_lazy as _
 
 
 def connect_events_signals():

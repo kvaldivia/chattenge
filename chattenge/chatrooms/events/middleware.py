@@ -1,5 +1,7 @@
 import threading
 
+from django.conf import settings
+
 _local = threading.local()
 _local.session_id = None
 
@@ -32,12 +34,14 @@ class SessionIDMiddleware(object):
 
         return response
 
-
     def process_request(self, request):
         global _local
         session_id = request.META.get("HTTP_X_SESSION_ID", None)
         _local.session_id = session_id
         request.session_id = session_id
+        request.stomp_url = getattr(settings, "EVENTS_WEBSOCKET_URL", None)
+        request.stomp_username = getattr(settings, "EVENTS_WEBSOCKET_USERNAME", None)
+        request.stomp_password = getattr(settings, "EVENTS_WEBSOCKET_PASSWORD", None)
 
     def process_response(self, request, response):
         global _local

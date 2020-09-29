@@ -69,6 +69,7 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "django_celery_beat",
+    "django_node_assets",
 ]
 
 LOCAL_APPS = [
@@ -147,7 +148,11 @@ STATICFILES_DIRS = [str(APPS_DIR / "static")]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "django_node_assets.finders.NodeModulesFinder",
 ]
+
+NODE_PACKAGE_JSON = str(ROOT_DIR / "package.json")
+NODE_MODULES_ROOT = str(ROOT_DIR / "node_modules")
 
 # MEDIA
 # ------------------------------------------------------------------------------
@@ -292,3 +297,6 @@ SOCIALACCOUNT_ADAPTER = "chattenge.users.adapters.SocialAccountAdapter"
 
 EVENTS_PUSH_BACKEND = "chattenge.chatrooms.events.backends.rabbitmq.EventsPushBackend"
 EVENTS_PUSH_BACKEND_OPTIONS = {"url": env("RABBITMQ_SERVICE_URL")}
+EVENTS_WEBSOCKET_URL = env("RABBITMQ_WEBSOCKET_URL")
+EVENTS_WEBSOCKET_USERNAME = env("RABBITMQ_WEBSOCKET_USERNAME")
+EVENTS_WEBSOCKET_PASSWORD = env("RABBITMQ_WEBSOCKET_PASSWORD")
