@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 pudb = "*"
 django-rest-framework = "*"
+pika = "*"
+amqp = "*"
 
 [requires]
 python_version = "3.8"

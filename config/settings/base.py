@@ -131,6 +131,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # custom middleware
+    "chattenge.chatrooms.events.middleware.SessionIDMiddleware",
 ]
 
 # STATIC
@@ -288,5 +290,5 @@ ACCOUNT_ADAPTER = "chattenge.users.adapters.AccountAdapter"
 SOCIALACCOUNT_ADAPTER = "chattenge.users.adapters.SocialAccountAdapter"
 
 
-# Your stuff...
-# ------------------------------------------------------------------------------
+EVENTS_PUSH_BACKEND = "chattenge.chatrooms.events.backends.rabbitmq.EventsPushBackend"
+EVENTS_PUSH_BACKEND_OPTIONS = {"url": env("RABBITMQ_SERVICE_URL")}

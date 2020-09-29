@@ -21,3 +21,4 @@ django-redis==4.12.1  # https://github.com/jazzband/django-redis
 # Django rest framework
 # ------------------------------------------------------------------------------
 djangorestframework==3.11.1
+pika==1.1.0

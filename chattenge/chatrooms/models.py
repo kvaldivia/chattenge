@@ -12,6 +12,10 @@ class Chatroom(models.Model):
 
 class Message(models.Model):
 
+    class Meta:
+        verbose_name = "message"
+        verbose_name_plural = "messages"
+
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     chatroom = models.ForeignKey(Chatroom, on_delete=models.DO_NOTHING)
     content = models.TextField(null=False)
