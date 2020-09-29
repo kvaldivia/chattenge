@@ -14,14 +14,27 @@ services:
     depends_on:
       - postgres
       - mailhog
+      - rabbitmq
     volumes:
       - .:/app:z
+      - ./node_modules
     env_file:
       - ./.envs/.local/.django
       - ./.envs/.local/.postgres
     ports:
       - "8000:8000"
+      - "6900:6900"
     command: /start
+
+  rabbitmq:
+    image: rabbitmq:3.8.9-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15674:15674"
+      - "15672:15672"
+    env_file:
+      - ./.envs/.local/.rabbitmq
 
   postgres:
     build:

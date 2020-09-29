@@ -13,6 +13,40 @@ The chat challenge
 
 :License: BSD
 
+Setup
+--------
+
+Environment files
+^^^^^^^^^^^^^^^^^^^^^
+* IMPORTANT! Extract the .envs directory in the project's root.
+
+
+Starting up containers
+^^^^^^^^^^^^^^^^^^^^^
+
+* This project's been built using docker-compose, so getting all services up and running is pretty easy. Run the following::
+
+  $ docker-compose -f local.yml up -d
+
+
+Setting up RabbitMQ
+^^^^^^^^^^^^^^^^^^^^^
+
+* We need to setup rabbitmq from the command line, you can find the commands in `compose/local/rabbitmq/create-main-channel.sh`. Run the following::
+
+    $ rabbitmqctl add_user $MAIN_USER $MAIN_USER_PASSWORD
+    $ rabbitmqctl add_vhost $MAIN_VHOST
+    $ rabbitmqctl set_permissions -p $MAIN_USER $MAIN_VHOST ".*" ".*" ".*"
+    $ rabbitmq-plugins enable rabbitmq_web_stomp
+
+Setting Up Sample Chatrooms
+^^^^^^^^^^^^^^^^^^^^^
+* To create sample chatrooms (i.e. predefined chatrooms), you can run the following command::
+
+  $ create_sample_chatrooms
+
+* The rabbitmq management ui is available at port 15672.
+
 
 Settings
 --------
@@ -24,7 +58,7 @@ Moved to settings_.
 Basic Commands
 --------------
 
-Setting Up Your Users
+Setting Up Superuser
 ^^^^^^^^^^^^^^^^^^^^^
 
 * To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
