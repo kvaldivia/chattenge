@@ -3,6 +3,9 @@ import json
 from django.db import connection
 
 from chattenge.utils.db import get_typename_for_model_instance
+
+from chatrooms.serializers import get_serializer
+
 from . import middleware as mw
 from .backends import base as backends
 
@@ -47,9 +50,12 @@ def emit_event_for_model(obj, *, type: str = "change", channel: str = "events",
 
     routing_key = "chatrooms.{0}.message.new".format(chatroom_id)
 
+    Serializer = get_serializer(obj._meta.verbose_name)
+    serialized = Serializer(obj)
+    
     data = {
         "type": type,
-        "matches": content_type,
+        "matches": serialized.data,
         "pk": pk
     }
 

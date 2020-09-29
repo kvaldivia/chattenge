@@ -22,26 +22,34 @@ $(document).ready(() => {
       return utils.post(chatroomUrl, {});
     }
 
+    /*
+     * Add a message to the message list
+    **/
+    const addMessage = (messageData) => {
+      console.log(messageData);
+    }
+
     return {
       postMessageToChatroom,
       joinChatroom,
       leaveChatroom,
+      addMessage,
     };
   }
 
   const utils = () => {
     const DEFAULT_HEADERS = { 'Content-Type': 'application/json' }
 
-    const post = async (url, headers, body) => {
+    const post = async (url, body, headers) => {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           ...DEFAULT_HEADERS,
           ...headers
         },
-        ...body
+        body: JSON.stringify(body),
       });
-      return response.json();
+      return response ? response.json() : '';
     }
 
     const get = async (url, headers) => {
@@ -52,7 +60,7 @@ $(document).ready(() => {
           ...headers
         }
       });
-      return response.json();
+      return response ? response.json() : '';
     }
      
     return {

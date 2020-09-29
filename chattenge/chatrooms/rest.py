@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from chattenge.chatrooms.models import Chatroom, Message
+from chattenge.chatrooms.serializers import MessageSerializer, CreateMessageSerializer
 
 
 class JoinChatroomView(APIView):
@@ -58,17 +59,21 @@ class SendMessageView(APIView):
 
     class Meta:
         model = Message
+        serializer_class = MessageSerializer
 
     def post(self, request, format=None, *args, **kwargs):
         chatroom_id = kwargs.get('pk')
         chatroom = get_object_or_404(Chatroom, pk=chatroom_id)
-        message_data = {
-            "author": request.user,
-            "chatroom": chatroom,
+        data = {
+            **request.data,
+            "chatroom": chatroom_id,
+            "author": request.user.id,
         }
-        Message.objects.create(**message_data)
+        serializer = CreateMessageSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_428_PRECONDITION_REQUIRED, )
 
 
 send_message_view = SendMessageView.as_view()
