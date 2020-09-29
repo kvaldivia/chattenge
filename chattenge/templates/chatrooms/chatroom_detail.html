@@ -23,23 +23,28 @@
         ws = new WebSocket("{{ request.stomp_url }}");
         const client = Stomp.over(ws);
         const onSuccess = (success) => {
-          console.log(success);
+          const read = (data) => {
+            const payload = JSON.parse(data.body);
+            chattenge.chatrooms.addMessage(payload.data.matches);
+            console.log("read: ", payload);
+          }
+          const subscription1 = client.subscribe("/exchange/messages/messages", read);
+          console.log("success: ", success);
         };
         const onError = (error) => {
           console.log(error);
         };
         client.connect('{{ request.stomp_username }}', '{{ request.stomp_password }}', onSuccess, onError, 'chattenge');
-        const read = (data) => {
-          console.log("message: ", data);
+        const dumb = (data) => {
+          console.log("dumb: ", data);
         }
-        const subscription = client.subscribe("", onSuccess);
       } catch(err) {
         console.error(err);
       }
       $('#send-message').submit((event) => {
         event.preventDefault();
         event.stopPropagation();
-        const message = $('my-message').val();
+        const message = $('#my-message').val();
         chattenge.chatrooms.postMessageToChatroom("{% url 'chatrooms:message' object.id %}", message);
       });
     });

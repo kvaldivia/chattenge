@@ -6,7 +6,7 @@ import pika
 from . import base
 
 
-log = logging.getLogger("tagia.events")
+log = logging.getLogger("chatroom.events")
 
 
 def _make_rabbitmq_connection(url):
